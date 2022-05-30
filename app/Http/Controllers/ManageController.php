@@ -9,7 +9,7 @@ class ManageController extends Controller
 {
     function index()
     {
-        $users = User::orderByDesc('id')->paginate(10);
+        $users = User::orderByDesc('id')->paginate(9);
         return view('manager', compact('users'));
     }
 
