@@ -14,11 +14,12 @@ class ManageController extends Controller
     }
 
     public function search(Request $request){
+        $listUsers = User::orderByDesc('id')->paginate(9);
         $search = $request->input('search');
         $users = User::query()
             ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('email', 'LIKE', "%{$search}%")
             ->get();
-        return view('search', compact('users'));
+        return view('search', compact('users', 'listUsers'));
     }
 }
