@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use phpMailer\phpMailer\phpMailer;
 
-require 'phpMailer/phpMailer.php';
-
 class UserController extends Controller
 {
     function getRegister()
