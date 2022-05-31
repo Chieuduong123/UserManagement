@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Tables - Basic Tables | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Manage</title>
     <meta name="description" content="" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,7 +18,6 @@
 </head>
 
 <body>
-
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -58,80 +57,79 @@
                                 </g>
                             </svg>
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">welcome</span>
                     </a>
-
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
                         <i class="bx bx-chevron-left bx-sm align-middle"></i>
                     </a>
                 </div>
+                <div class="menu-inner-shadow"></div>
                 <ul class="menu-inner py-1">
-
-                    <li class="menu-item">
-                        <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-support"></i>
-                            <div data-i18n="Support">Users</div>
-                        </a>
-                    </li>
-
                 </ul>
             </aside>
-            <!-- / Menu -->
-
-            <!-- Layout container -->
             <div class="layout-page">
-                <!-- Navbar -->
-
                 @include('nav')
-
-                <!-- / Navbar -->
-
-                <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    <!-- Content -->
-
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
-
-                        <!-- Basic Bootstrap Table -->
-                        <div class="card">
-                            <h5 class="card-header">Manage Users</h5>
-                            <div class="table-responsive text-nowrap">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                        </tr>
-                                    </thead>
-                                    @if($users->isNotEmpty())
-                                    @foreach($users as $user)
-                                    <tbody class="table-border-bottom-0">
-                                        <tr>
-                                            <td>{{$user->name}}</td>
-                                            <td>{{$user->email}}</td>
-                                        </tr>
-                                    </tbody>
-                                    @endforeach
-                                    @else
-                                    <div>
-                                        <h2>No posts found</h2>
+                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms/</span>Edit User</h4>
+                        <div class="row">
+                            <div class="col-xxl">
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex align-items-center justify-content-between">
+                                        <h5 class="mb-0">Basic Layout</h5>
+                                        <small class="text-muted float-end">Default label</small>
                                     </div>
-                                    @endif
-
-
-                                </table>
-                                <div class="d-flex justify-content-center">
-                                    {{$listUsers->links("pagination::bootstrap-4")}}
+                                    <div class="card-body">
+                                        <form method="post" action="{{route('users.update', $user->id)}}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('patch') }}
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-default-name" >Name</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="basic-default-name" placeholder="Name" name="name"  value="{{ $user->name }}" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-default-email">Email</label>
+                                                <div class="col-sm-10">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" id="basic-default-email" class="form-control" name="email"  value="{{ $user->email }}" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-default-email2" />
+                                                        <span class="input-group-text" id="basic-default-email2">@example.com</span>
+                                                    </div>
+                                                    <!-- <div class="form-text">You can use letters, numbers & periods</div> -->
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-default-company">Old Password</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" name="password" id="basic-default-company" placeholder="Old Password" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label"  for="basic-default-phone">New Password</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" id="basic-default-phone" name="new_password" class="form-control phone-mask" placeholder="New Password" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-default-phone">Confirm New Password</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" id="basic-default-phone" name="new_password_confirmation" class="form-control phone-mask" placeholder="Confirm New Password" />
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
 </body>
 
 </html>

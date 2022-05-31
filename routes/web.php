@@ -17,8 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/manager', function () {
-//     return view('manager');
+// Route::get('/edit', function () {
+//     return view('edit');
 // });
 
 // Route::get('/register', function () {
@@ -39,7 +39,11 @@ Route::group(['middleware' => 'web'], function () {
     ]);
 });
 
-Route::group(['middleware' => ['web','auth']], function () {
+Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/managers', 'App\Http\Controllers\ManageController@index')->name('managers');
-    Route::get('/search', 'App\Http\Controllers\ManageController@search')->name('search');;
+    // Route::get('/search', 'App\Http\Controllers\ManageController@search')->name('managers.search');
+    Route::get('user/{id}', 'App\Http\Controllers\ManageController@destroy')->name('users.destroy');
+
+    // Route::get('users/{user}', 'App\Http\Controllers\ManageController@edit')->name('users.edit');
+    // Route::patch('users/{id}/update', 'App\Http\Controllers\ManageController@update')->name('users.update');
 });

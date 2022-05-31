@@ -81,17 +81,13 @@
             <!-- Layout container -->
             <div class="layout-page">
                 <!-- Navbar -->
-
                 @include('nav')
                 <!-- / Navbar -->
-
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
                     <!-- Content -->
-
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Users</h4>
-
                         <!-- Basic Bootstrap Table -->
                         <div class="card">
                             <h5 class="card-header">Manage Users</h5>
@@ -112,16 +108,18 @@
                                             <td>{{$user->name}}</td>
                                             <td>{{$user->email}}</td>
                                             <td>
-                                                <form action="" method="">
-                                                    <a class="btn btn-primary" href="">Edit</a>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                <a class="btn btn-primary" href="">Edit</a>
+                                                @csrf
+                                                @method('DELETE')
+                                                <a class="btn btn-primary" href="{{ route('users.destroy',$user->id) }}">Delete</a>
+                                                <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
                                             </td>
                                         </tr>
                                     </tbody>
                                     @endforeach
                                 </table>
                                 <div class="d-flex justify-content-center">
-                                    {{$users->links("pagination::bootstrap-4")}}
+                                    {{ $users->appends(request()->except('page'))->links("pagination::bootstrap-4") }}
                                 </div>
                             </div>
                         </div>
@@ -129,7 +127,6 @@
                 </div>
             </div>
         </div>
-
 </body>
 
 <script>
