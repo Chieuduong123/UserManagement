@@ -36,57 +36,24 @@
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Enter your username" autofocus />
+                                <span style="color: red;" class="error-message">{{ $errors->first('name') }}</span></p>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" />
+                                <span style="color: red;" class="error-message">{{ $errors->first('email') }}</span></p>
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                                    <span style="color: red;" class="error-message">{{ $errors->first('password') }}</span></p>
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
                             </div>
                     </div>
-                    <?php //Success
-                    ?>
-                    @if ( Session::has('success') )
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <strong>{{ Session::get('success') }}</strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                    </div>
-                    @endif
-                    <?php //Error
-                    ?>
-                    @if ( Session::has('error') )
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <strong>{{ Session::get('error') }}</strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                    </div>
-                    @endif
-                    @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                    </div>
-                    @endif
                     <button class="btn btn-primary d-grid w-100">Sign up</button>
                     </form>
-
                     <p class="text-center">
                         <span>Already have an account?</span>
                         <a href="{{url('/login')}}">

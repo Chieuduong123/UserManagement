@@ -19,6 +19,41 @@
 </head>
 
 <body>
+  <?php //Hiển thị thông báo thành công
+  ?>
+  @if ( Session::has('success') )
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <strong>{{ Session::get('success') }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+  </div>
+  @endif
+  <?php //Hiển thị thông báo lỗi
+  ?>
+  @if ( Session::has('error') )
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <strong>{{ Session::get('error') }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+  </div>
+  @endif
+  @if ($errors->any())
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+  </div>
+  @endif
   <div class="container-xxl">
     <div class="authentication-wrapper authentication-basic container-p-y">
       <div class="authentication-inner">
@@ -42,42 +77,19 @@
               <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="text" class="form-control" name="name" placeholder="Enter your email or username" autofocus />
+                <span style="color: red;" class="error-message">{{ $errors->first('name') }}</span></p>
               </div>
 
               <div class="input-group input-group-merge">
                 <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
               </div>
+              <span style="color: red;" class="error-message">{{ $errors->first('password') }}</span></p>
           </div>
-          <?php //Hiển thị thông báo lỗi
-          ?>
-          @if ( Session::has('error') )
-          <div class="alert alert-danger alert-dismissible" role="alert">
-            <strong>{{ Session::get('error') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              <span class="sr-only">Close</span>
-            </button>
-          </div>
-          @endif
-          @if ($errors->any())
-          <div class="alert alert-danger alert-dismissible" role="alert">
-            <ul>
-              @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              <span class="sr-only">Close</span>
-            </button>
-          </div>
-          @endif
           <div class="mb-3">
             <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
           </div>
           </form>
-
           <p class="text-center">
             <a href="{{url('/register')}}">
               <span>Create an account</span>

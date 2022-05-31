@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ManageController extends Controller
 {
     function index(Request $request)
     {
-        $users = User::select('*');
+        $users = User::orderByDesc('id')->paginate(5);
         if ($request->input('search')) {
             $search = $request->input('search');
             $users = $users->where('name', 'LIKE', "%{$search}%")
                 ->orWhere('email', 'LIKE', "%{$search}%");
         }
-        $users = $users->paginate(2);
         return view('manager', compact('users'));
     }
 

@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequests;
+use App\Http\Requests\RegisterRequests;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use PHPMailer\PHPMailer\PHPMailer;
+use phpMailer\phpMailer\phpMailer;
+
+require 'phpMailer/vendor/autoload.php';
+require 'phpMailer/phpMailer.php';
 
 class UserController extends Controller
 {
@@ -16,38 +21,33 @@ class UserController extends Controller
         return view('/register');
     }
 
-    function postRegister(Request $request)
+    function postRegister(RegisterRequests $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required|string',
-        ]);
+        $data = [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+        ];
         $email = $request->email;
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
+        $user = User::create($data);
         auth()->login($user);
 
-        require 'PHPMailer/vendor/autoload.php';
-        require 'PHPMailer/PHPMailer.php';
+        $phpMailer = new PHPMailer(true);
+        $phpMailer->SMTPDebug = 0;
+        $phpMailer->isSMTP();
+        $phpMailer->Host = env('EMAIL_HOST');
+        $phpMailer->SMTPAuth = true;
+        $phpMailer->Username = env('EMAIL_USERNAME');
+        $phpMailer->Password = env('EMAIL_PASSWORD');
+        $phpMailer->SMTPSecure = 'ssl';
+        $phpMailer->Port = 465;
+        $phpMailer->setFrom('anhd10315@gmail.com', 'anhduong');
+        $phpMailer->addAddress($email);
+        $phpMailer->isHTML(true);
+        $phpMailer->Subject = 'Email verification';
+        $phpMailer->Body = "<h2>You have Register! Welcome to here!</h2>";
+        $phpMailer->send();
 
-        $PHPMailer = new PHPMailer(true);
-
-        $PHPMailer->SMTPDebug = 0;
-        $PHPMailer->isSMTP();
-        $PHPMailer->Host = 'smtp.gmail.com';
-        $PHPMailer->SMTPAuth = true;
-        $PHPMailer->Username = 'anhd10315@gmail.com';
-        $PHPMailer->Password = 'vwsypottasjcjkwx';
-        $PHPMailer->SMTPSecure = 'ssl';
-        $PHPMailer->Port = 465;
-        $PHPMailer->setFrom('anhd10315@gmail.com', 'anhduong');
-        $PHPMailer->addAddress($email);
-        $PHPMailer->isHTML(true);
-        $PHPMailer->Subject = 'Email verification';
-        $PHPMailer->Body = "<h2>You have Register! Welcome to here!</h2>";
-        $PHPMailer->send();
         if ($user) {
             Session::flash('success', 'Register Successfull!');
             return redirect('/login');
@@ -62,27 +62,16 @@ class UserController extends Controller
         return view('/login');
     }
 
-    function postLogin(Request $request)
+    function postLogin(LoginRequests $request)
     {
-        $rules = [
-            'name' => 'required',
-            'password' => 'required'
-        ];
-        $validator = Validator::make($request->all(), $rules);
+        $name = $request['name'];
+        $password = $request['password'];
 
-
-        if ($validator->fails()) {
-            return redirect('login')->withErrors($validator)->withInput();
+        if (Auth::attempt(['name' => $name, 'password' => $password])) {
+            return redirect('/managers');
         } else {
-            $name = $request->input('name');
-            $password = $request->input('password');
-
-            if (Auth::attempt(['name' => $name, 'password' => $password])) {
-                return redirect('/managers');
-            } else {
-                Session::flash('error', 'Email hoặc mật khẩu không đúng!');
-                return redirect('/login');
-            }
+            Session::flash('error', 'Email hoặc mật khẩu không đúng!');
+            return redirect('/login');
         }
     }
 }
