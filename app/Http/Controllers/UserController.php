@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequests;
 use App\Http\Requests\RegisterRequests;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 use phpMailer\phpMailer\phpMailer;
 
-require 'phpMailer/vendor/autoload.php';
 require 'phpMailer/phpMailer.php';
 
 class UserController extends Controller
