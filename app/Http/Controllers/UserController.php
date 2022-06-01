@@ -7,7 +7,7 @@ use App\Http\Requests\RegisterRequests;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use phpMailer\phpMailer\phpMailer;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class UserController extends Controller
 {

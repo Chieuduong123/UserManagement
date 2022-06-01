@@ -73,7 +73,7 @@
             <p class="mb-4">Login here!</p>
 
             <form id="formAuthentication" class="mb-3" action="{{url('/login')}}" method="POST">
-              {!! csrf_field() !!}
+              @csrf
               <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="text" class="form-control" name="name" placeholder="Enter your email or username" autofocus />
@@ -92,7 +92,10 @@
           </form>
           <p class="text-center">
             <a href="{{url('/register')}}">
-              <span>Create an account</span>
+              <span>Create an account</span>&ensp;&ensp;
+            </a>
+            <a href="{{url('/forgotPass')}}">
+              <span>Forgot Password?</span>
             </a>
           </p>
         </div>

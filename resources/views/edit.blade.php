@@ -82,7 +82,7 @@
                                     <div class="card-body">
                                         <form method="post" action="{{route('users.update', $user->id)}}">
                                             {{ csrf_field() }}
-                                            {{ method_field('patch') }}
+                                            {{ method_field('post') }}
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="basic-default-name" >Name</label>
                                                 <div class="col-sm-10">

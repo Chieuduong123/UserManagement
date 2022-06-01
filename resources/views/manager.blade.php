@@ -108,7 +108,7 @@
                                             <td>{{$user->name}}</td>
                                             <td>{{$user->email}}</td>
                                             <td>
-                                                <a class="btn btn-primary" href="">Edit</a>
+                                                {{-- <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Edit</a> --}}
                                                 @csrf
                                                 @method('DELETE')
                                                 <a class="btn btn-primary" href="{{ route('users.destroy',$user->id) }}">Delete</a>

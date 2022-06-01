@@ -38,12 +38,18 @@ Route::group(['middleware' => 'web'], function () {
         'as' => 'login'
     ]);
 });
+Route::get('/forgotPass', 'App\Http\Controllers\ForgotPasswordController@forgotPass')->name('forgotPass');
+Route::post('forget-password', 'App\Http\Controllers\ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
+Route::get('/resetPass/{token}', 'App\Http\Controllers\ResetPasswordController@resetPass')->name('resetPass');
+Route::post('/reset-password',  'App\Http\Controllers\ResetPasswordController@submitResetPasswordForm')->name('reset.password.post');
+
 
 Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/managers', 'App\Http\Controllers\ManageController@index')->name('managers');
     // Route::get('/search', 'App\Http\Controllers\ManageController@search')->name('managers.search');
     Route::get('user/{id}', 'App\Http\Controllers\ManageController@destroy')->name('users.destroy');
 
-    // Route::get('users/{user}', 'App\Http\Controllers\ManageController@edit')->name('users.edit');
-    // Route::patch('users/{id}/update', 'App\Http\Controllers\ManageController@update')->name('users.update');
+    Route::get('users/{user}', 'App\Http\Controllers\ManageController@edit')->name('users.edit');
+    Route::post('users/{id}/update', 'App\Http\Controllers\ManageController@update')->name('users.update');
+
 });
